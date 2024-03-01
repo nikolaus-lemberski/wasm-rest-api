@@ -8,18 +8,11 @@
 
 `oc debug node/<node-name> -- chroot /host && crun-wasm -v`
 
-3. Label a namespace for standard set of security policies
-
-```
-oc new-project wasm
-oc label --overwrite ns/wasm pod-security.kubernetes.io/enforce=baseline pod-security.kubernetes.io/warn=baseline
-```
-
-4. Apply wasm workload
+3. Deploy the project
 
 `oc apply -f wasm-rest-api.yml`
 
-5. Test wasm-rest-api
+4. Test wasm-rest-api
 
 ```
 ROUTE_NAME=$(oc get route wasm-rest-api -o jsonpath='{.spec.host}')

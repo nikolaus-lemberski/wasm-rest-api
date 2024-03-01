@@ -1,4 +1,6 @@
-# A simple REST API microservice
+# A simple WASM REST API
+
+You need rustup/cargo to follow along.
 
 ## Build
 
