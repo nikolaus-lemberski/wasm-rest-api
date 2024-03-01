@@ -52,7 +52,9 @@ oc apply -f .openshift/machineconfig.yml
 
 ### Check if node supports crun-wasm
 ```bash
-oc debug node/<node-name> -- chroot /host && crun-wasm -v
+oc debug node/<node-name>
+chroot /host
+crun-wasm -v
 ```
 
 You should see the version of crun-wasm with wasmedge listed:
