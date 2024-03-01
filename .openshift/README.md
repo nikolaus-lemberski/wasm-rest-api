@@ -8,6 +8,8 @@
 
 `oc debug node/<node-name> -- chroot /host && crun-wasm -v`
 
+You should see the version of crun-wasm and ***wasmedge***  listed.
+
 3. Deploy the project
 
 `oc apply -f wasm-rest-api.yml`
