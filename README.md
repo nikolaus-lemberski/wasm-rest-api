@@ -45,4 +45,22 @@ Build and push to quay.io Github action can be triggered by creating a new relea
 
 ## OpenShift deployment
 
-See [README.md](.openshift/README.md) in subfolder ***.openshift***.
+1. Apply the machineconfig.yml
+`oc apply -f .openshift/machineconfig.yml`
+
+2. Check if node supports crun-wasm
+`oc debug node/<node-name> -- chroot /host && crun-wasm -v`
+
+You should see the version of crun-wasm with ***wasmedge*** listed:
+> +SYSTEMD +SELINUX +APPARMOR +CAP +SECCOMP +EBPF +WASM:wasmedge +YAJL
+
+3. Deploy the project
+`oc apply -f .openshift/wasm-rest-api.yml`
+
+4. Test wasm-rest-api
+
+```
+ROUTE_NAME=$(oc get route wasm-rest-api -o jsonpath='{.spec.host}')
+curl $ROUTE_NAME
+curl $ROUTE_NAME/goodbye
+```
