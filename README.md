@@ -13,7 +13,7 @@ cargo build --target wasm32-wasi --release
 
 ### Run
 
-For this step you need [WasmEdge](https://wasmedge.org/){:target="_blank"}.
+For this step you need [WasmEdge](https://wasmedge.org/).
 
 ```bash
 wasmedge target/wasm32-wasi/release/wasm-rest-api.wasm
