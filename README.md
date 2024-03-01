@@ -1,21 +1,25 @@
 # A simple WASM REST API
 
+## Build and run project on your machine
+
 You need rustup/cargo to follow along.
 
-## Build
+### Build
 
 ```bash
 rustup target add wasm32-wasi
 cargo build --target wasm32-wasi --release
 ```
 
-## Run
+### Run
+
+For this step you need the [WasmEdge runtime](https://wasmedge.org/).
 
 ```bash
 wasmedge target/wasm32-wasi/release/wasm-rest-api.wasm
 ```
 
-## Test
+### Test
 
 Run the following from another terminal.
 
@@ -24,14 +28,14 @@ curl localhost:8080
 curl localhost:8080/goodbye
 ```
 
-## Build image
+### Build image
 
 ```bash
 cargo build --target wasm32-wasi --release
 podman build --platform=wasi/wasm32 --annotation=module.wasm.image/variant=compat -t wasm-rest-api .
 ```
 
-## Check image
+### Check image
 
 ```bash
 podman image inspect wasm-rest-api:latest
@@ -39,11 +43,13 @@ podman image inspect wasm-rest-api:latest
 
 Annotation should be there, Architecture "wasm32" and Os "wasi".
 
-## Github Action
+### Github Action
 
 Build and push to quay.io Github action can be triggered by creating a new release. See subfolder **.github**.
 
 ## OpenShift deployment
+
+You need an OpenShift cluster with admin rights.
 
 ### Apply the machineconfig.yml
 ```bash
