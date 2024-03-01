@@ -39,4 +39,8 @@ Annotation should be there, Architecture "wasm32" and Os "wasi".
 
 ## Github Action
 
-Build and push to quay.io Github action can be triggered by creating a new release.
+Build and push to quay.io Github action can be triggered by creating a new release. See subfolder ***.github***.
+
+## OpenShift deployment
+
+See [README.md](.openshift/README.md) in subfolder **.openshift***.
