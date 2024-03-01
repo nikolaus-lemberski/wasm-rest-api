@@ -1,0 +1,43 @@
+name: Build and push
+
+on:
+  release:
+    types: [created]
+
+env:
+  CARGO_TERM_COLOR: always
+  REGISTRY_USER: nlembers
+  IMAGE_REGISTRY: quay.io
+  REGISTRY_PASSWORD: ${{ secrets.PODMAN_PASSWORD }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Add wasm target
+      run: rustup target add wasm32-wasi
+      
+    - name: Build wasm artefact
+      run: cargo build --target wasm32-wasi --release
+
+    - name: Build container image
+      run: podman build --platform=wasi/wasm32 --annotation=module.wasm.image/variant=compat -t wasm-rest-api .
+
+    - name: Log in to Quay.io
+      uses: redhat-actions/podman-login@v1
+      with:
+        username: ${{ env.REGISTRY_USER }}
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.IMAGE_REGISTRY }}
+
+    - name: Tag image
+      run: podman tag wasm-rest-api:latest quay.io/${{ env.REGISTRY_USER }}/wasm-rest-api:${{ github.sha }}
+
+    - name: Publish image
+      run: podman push quay.io/${{ env.REGISTRY_USER }}/wasm-rest-api:${{ github.sha }}
+
+    - name: Print image name
+      run: echo quay.io/${{ env.REGISTRY_USER }}/wasm-rest-api:${{ github.sha }}

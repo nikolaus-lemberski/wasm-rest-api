@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: wasm-rest-api
+  name: wasm-rest-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wasm-rest-api
+  template:
+    metadata:
+      labels:
+        app: wasm-rest-api
+    spec:
+      containers:
+        - name: wasm-rest-api
+          image: quay.io/nlembers/wasm-rest-api:v1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+              command: ["/wasm-rest-api.wasm"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: wasm-rest-api
+  name: wasm-rest-api
+spec:
+  selector:
+    app: wasm-rest-api
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: wasm-rest-api
+  name: wasm-rest-api
+spec:
+  port:
+    targetPort: 8080
+  to:
+    name: wasm-rest-api

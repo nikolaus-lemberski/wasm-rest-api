@@ -1,0 +1,30 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: 99-workers-wasm-workloads
+spec:
+  config:
+    ignition:
+      config: {}
+      security:
+        tls: {}
+      timeouts: {}
+      version: 3.2.0
+    networkd: {}
+    passwd: {}
+    storage:
+      files:
+        - contents:
+            source: data:text/plain;charset=utf-8;base64,W2NyaW8ucnVudGltZV0KZGVmYXVsdF9ydW50aW1lID0gImNydW4td2FzbSIKW2NyaW8ucnVudGltZS5ydW50aW1lcy5jcnVuLXdhc21dCnJ1bnRpbWVfcGF0aCA9ICIvdXNyL2Jpbi9jcnVuIgpwbGF0Zm9ybV9ydW50aW1lX3BhdGhzID0geyJ3YXNpL3dhc20zMiIgPSAiL3Vzci9iaW4vY3J1bi13YXNtIn0K
+            # [crio.runtime]
+            # default_runtime = "crun-wasm"
+            # [crio.runtime.runtimes.crun-wasm]
+            # runtime_path = "/usr/bin/crun"
+            # platform_runtime_paths = {"wasi/wasm32" = "/usr/bin/crun-wasm"}
+          mode: 0644
+          overwrite: true
+          path: /etc/crio/crio.conf.d/99-crun-wasm.conf
+  extensions:
+    - wasm
