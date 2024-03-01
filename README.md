@@ -41,7 +41,7 @@ Annotation should be there, Architecture "wasm32" and Os "wasi".
 
 ## Github Action
 
-Build and push to quay.io Github action can be triggered by creating a new release. See subfolder ***.github***.
+Build and push to quay.io Github action can be triggered by creating a new release. See subfolder **.github**.
 
 ## OpenShift deployment
 
@@ -58,7 +58,7 @@ crun-wasm -v
 ```
 
 You should see the version of crun-wasm with wasmedge listed:
-> +SYSTEMD +SELINUX +APPARMOR +CAP +SECCOMP +EBPF ***+WASM:wasmedge*** +YAJL
+> +SYSTEMD +SELINUX +APPARMOR +CAP +SECCOMP +EBPF **+WASM:wasmedge** +YAJL
 
 ### Deploy the project
 ```bash
