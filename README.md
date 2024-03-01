@@ -43,4 +43,4 @@ Build and push to quay.io Github action can be triggered by creating a new relea
 
 ## OpenShift deployment
 
-See [README.md](.openshift/README.md) in subfolder **.openshift***.
+See [README.md](.openshift/README.md) in subfolder ***.openshift***.
